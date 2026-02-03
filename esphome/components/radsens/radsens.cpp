@@ -192,7 +192,7 @@ void RadSensComponent::update() {
                 raw_counts);
 
   if (this->last_update != 0 && (this->counts_per_minute_sensor_ != nullptr)){
-    float scale_to_minutes = ((millis() - this->last_update) / 60000.0);
+    float scale_to_minutes = ((millis() - this->last_update) / 10000.0);
     this->counts_per_minute_sensor_->publish_state(raw_counts / scale_to_minutes);
   }
   this->last_update = millis();
