@@ -23,7 +23,7 @@ I re-sorted the switch setup which seems like a bit of a hack, but it at least w
 
 ``` yaml
 external_components:
-  - source: github://krbaker/esphome-radsens@v1.0.1
+  - source: github://d1m0k/esphome-radsens@v1.0.1
     components: [ radsens ]
     refresh: 600s
 

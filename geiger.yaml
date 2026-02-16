@@ -22,7 +22,7 @@ ota:
     password: !secret ota_pwd
 
 external_components:
-  - source: github://krbaker/esphome-radsens@v0.1.0
+  - source: github://d1m0k/esphome-radsens@v1.0.1
     components: [ radsens ]
     refresh: 600s
 
