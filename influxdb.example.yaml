@@ -1,0 +1,20 @@
+influxdb:
+  username: hass
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+  database: hass
+  include:
+    entities:
+      - sensor.geiger_counter_dynamic_intensity
+      - sensor.geiger_counter_static_intensity
+      - sensor.geiger_counter_counts_per_polling
+      - sensor.geiger_counter_counts_per_minute
+      - sensor.geiger_counter_radsens_max_cpp
+      - sensor.geiger_counter_radsens_max_cpm
+      - sensor.geiger_counter_max_cpp_timestamp_s_uptime
+      - sensor.geiger_counter_max_cpm_timestamp_s_uptime
+      - sensor.geiger_counter_total_counts_per_polling
+      - sensor.geiger_counter_uptime
+      - sensor.geiger_counter_accumulated_dose_ur
+      - sensor.geiger_counter_accumulated_dose_msv

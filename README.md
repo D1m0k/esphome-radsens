@@ -117,3 +117,14 @@ A full configuration can be found [here](geiger.yaml) but I recommend reading th
 ## Other RadSens software
 * https://github.com/climateguard/RadSens/tree/master
 * https://github.com/maaad/RadSens1v2
+
+## Grafana dashboard (InfluxDB)
+
+- Ready dashboard JSON: [`grafana/radsens-dashboard.json`](grafana/radsens-dashboard.json)
+- Import in Grafana: **Dashboards → Import → Upload JSON file**.
+- Select your InfluxDB datasource when prompted.
+
+Notes:
+- Queries are built for InfluxDB measurement `state` with tag `entity_id` (HA default style).
+- Default entity IDs are based on this project example naming.
+- If your entity IDs differ, edit constants in dashboard variables (e.g. `cpm_entity`, `cpp_entity`, `dose_msv_entity`) after import.
