@@ -22,7 +22,7 @@ ota:
     password: !secret ota_pwd
 
 external_components:
-  - source: github://d1m0k/esphome-radsens@v1.0.1
+  - source: github://d1m0k/esphome-radsens@1.0.3
     components: [ radsens ]
     refresh: 600s
 
@@ -41,10 +41,26 @@ sensor:
       name: "Static Intensity"
     counts_per_polling:
       name: "Counts Per Polling"
+    radsens_max_cpp:
+      name: "RadSens Max CPP"
+    max_cpp_timestamp:
+      name: "Max CPP Timestamp (s uptime)"
     firmware_version:
       name: "Firmware Version"
     counts_per_minute:
       name: "Counts Per Minute"
+    radsens_max_cpm:
+      name: "RadSens Max CPM"
+    max_cpm_timestamp:
+      name: "Max CPM Timestamp (s uptime)"
+    total_cpp:
+      name: "Total Counts Per Polling"
+    uptime:
+      name: "Uptime"
+    accumulated_dose_ur:
+      name: "Accumulated Dose (uR)"
+    accumulated_dose_msv:
+      name: "Accumulated Dose (mSv)"
 
 number:
   - platform: radsens

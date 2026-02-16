@@ -23,7 +23,7 @@ I re-sorted the switch setup which seems like a bit of a hack, but it at least w
 
 ``` yaml
 external_components:
-  - source: github://d1m0k/esphome-radsens@v1.0.1
+  - source: github://d1m0k/esphome-radsens@1.0.3
     components: [ radsens ]
     refresh: 600s
 
@@ -43,6 +43,22 @@ sensor:
       name: "Counts Per Polling"
     counts_per_minute:
       name: "Counts Per Minute"
+    radsens_max_cpp:
+      name: "RadSens Max CPP"
+    max_cpp_timestamp:
+      name: "Max CPP Timestamp (s uptime)"
+    radsens_max_cpm:
+      name: "RadSens Max CPM"
+    max_cpm_timestamp:
+      name: "Max CPM Timestamp (s uptime)"
+    total_cpp:
+      name: "Total CPP"
+    uptime:
+      name: "Uptime"
+    accumulated_dose_ur:
+      name: "Accumulated Dose (uR)"
+    accumulated_dose_msv:
+      name: "Accumulated Dose (mSv)"
 
 number:
   - platform: radsens
@@ -67,6 +83,14 @@ A full configuration can be found [here](geiger.yaml) but I recommend reading th
 | sensor:radsens:static_intensity | The 'static_intensity' sensor which is an average intensity over the last 5min |
 | sensor:radsens:counts_per_polling | The number of detected impulses in the current polling interval |
 | sensor:radsens:counts_per_minute | Counts-per-minute computed from average polling counts over 60 seconds (published every ~60s) |
+| sensor:radsens:radsens_max_cpp | Max observed counts_per_polling since boot |
+| sensor:radsens:max_cpp_timestamp | Uptime seconds when max CPP was detected |
+| sensor:radsens:radsens_max_cpm | Max observed counts_per_minute since boot |
+| sensor:radsens:max_cpm_timestamp | Uptime seconds when max CPM was detected |
+| sensor:radsens:total_cpp | Sum of all counts_per_polling since boot |
+| sensor:radsens:uptime | Device uptime in seconds since boot |
+| sensor:radsens:accumulated_dose_ur | Integrated dose since boot in micro-roentgen |
+| sensor:radsens:accumulated_dose_msv | Integrated dose since boot converted to mSv |
 | number:radsens | Needed to enable interval control from Home Assistant |
 | number:radsens:polling_interval | Poll interval in seconds (5..300). Value is applied immediately and restored after reboot |
 | switch:radsens | Needed to enable the switches |

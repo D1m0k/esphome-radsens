@@ -43,6 +43,14 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   void set_static_intensity_sensor(sensor::Sensor *static_intensity_sensor) { static_intensity_sensor_ = static_intensity_sensor; }
   void set_counts_per_minute_sensor(sensor::Sensor *counts_per_minute_sensor) { counts_per_minute_sensor_ = counts_per_minute_sensor; }
   void set_counts_per_polling_sensor(sensor::Sensor *counts_per_polling_sensor) { counts_per_polling_sensor_ = counts_per_polling_sensor; }
+  void set_radsens_max_cpm_sensor(sensor::Sensor *radsens_max_cpm_sensor) { radsens_max_cpm_sensor_ = radsens_max_cpm_sensor; }
+  void set_radsens_max_cpp_sensor(sensor::Sensor *radsens_max_cpp_sensor) { radsens_max_cpp_sensor_ = radsens_max_cpp_sensor; }
+  void set_max_cpm_timestamp_sensor(sensor::Sensor *max_cpm_timestamp_sensor) { max_cpm_timestamp_sensor_ = max_cpm_timestamp_sensor; }
+  void set_max_cpp_timestamp_sensor(sensor::Sensor *max_cpp_timestamp_sensor) { max_cpp_timestamp_sensor_ = max_cpp_timestamp_sensor; }
+  void set_total_cpp_sensor(sensor::Sensor *total_cpp_sensor) { total_cpp_sensor_ = total_cpp_sensor; }
+  void set_uptime_sensor(sensor::Sensor *uptime_sensor) { uptime_sensor_ = uptime_sensor; }
+  void set_accumulated_dose_ur_sensor(sensor::Sensor *accumulated_dose_ur_sensor) { accumulated_dose_ur_sensor_ = accumulated_dose_ur_sensor; }
+  void set_accumulated_dose_msv_sensor(sensor::Sensor *accumulated_dose_msv_sensor) { accumulated_dose_msv_sensor_ = accumulated_dose_msv_sensor; }
   void set_firmware_version_sensor(sensor::Sensor *firmware_version_sensor) { firmware_version_sensor_ = firmware_version_sensor; }
 
 #ifdef USE_NUMBER
@@ -65,12 +73,27 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   sensor::Sensor *static_intensity_sensor_{nullptr};
   sensor::Sensor *counts_per_minute_sensor_{nullptr};
   sensor::Sensor *counts_per_polling_sensor_{nullptr};
+  sensor::Sensor *radsens_max_cpm_sensor_{nullptr};
+  sensor::Sensor *radsens_max_cpp_sensor_{nullptr};
+  sensor::Sensor *max_cpm_timestamp_sensor_{nullptr};
+  sensor::Sensor *max_cpp_timestamp_sensor_{nullptr};
+  sensor::Sensor *total_cpp_sensor_{nullptr};
+  sensor::Sensor *uptime_sensor_{nullptr};
+  sensor::Sensor *accumulated_dose_ur_sensor_{nullptr};
+  sensor::Sensor *accumulated_dose_msv_sensor_{nullptr};
   sensor::Sensor *firmware_version_sensor_{nullptr};
 #ifdef USE_NUMBER
   number::Number *polling_interval_number_{nullptr};
 #endif
   uint32_t cpm_window_duration_ms_{0};
   uint32_t cpm_window_total_counts_{0};
+  uint32_t start_millis_{0};
+  uint32_t total_cpp_{0};
+  float max_cpm_{0.0f};
+  uint16_t max_cpp_{0};
+  uint32_t max_cpm_timestamp_s_{0};
+  uint32_t max_cpp_timestamp_s_{0};
+  float accumulated_dose_ur_{0.0f};
   uint32_t last_update = 0;
   uint8_t firmware_version = 0;
   uint16_t sensitivity_ = 0;

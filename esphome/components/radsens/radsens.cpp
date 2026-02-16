@@ -141,6 +141,17 @@ void RadSensComponent::setup() {
     static_cast<PollingIntervalControl*>(this->polling_interval_number_)->setup();
 #endif
 
+  this->start_millis_ = millis();
+  this->total_cpp_ = 0;
+  this->max_cpm_ = 0.0f;
+  this->max_cpp_ = 0;
+  this->max_cpm_timestamp_s_ = 0;
+  this->max_cpp_timestamp_s_ = 0;
+  this->accumulated_dose_ur_ = 0.0f;
+  this->cpm_window_duration_ms_ = 0;
+  this->cpm_window_total_counts_ = 0;
+  this->last_update = 0;
+
   ESP_LOGCONFIG(TAG, "RadSens setup: Complete (firmware version %u)!", this->firmware_version);
 }
 
@@ -158,6 +169,14 @@ void RadSensComponent::dump_config() {
   LOG_SENSOR("  ", "Static Intensity", this->static_intensity_sensor_);
   LOG_SENSOR("  ", "Counts Per Polling", this->counts_per_polling_sensor_);
   LOG_SENSOR("  ", "Counts Per Minute", this->counts_per_minute_sensor_);
+  LOG_SENSOR("  ", "RadSens Max CPM", this->radsens_max_cpm_sensor_);
+  LOG_SENSOR("  ", "RadSens Max CPP", this->radsens_max_cpp_sensor_);
+  LOG_SENSOR("  ", "Max CPM Timestamp", this->max_cpm_timestamp_sensor_);
+  LOG_SENSOR("  ", "Max CPP Timestamp", this->max_cpp_timestamp_sensor_);
+  LOG_SENSOR("  ", "Total CPP", this->total_cpp_sensor_);
+  LOG_SENSOR("  ", "Uptime", this->uptime_sensor_);
+  LOG_SENSOR("  ", "Accumulated Dose (uR)", this->accumulated_dose_ur_sensor_);
+  LOG_SENSOR("  ", "Accumulated Dose (mSv)", this->accumulated_dose_msv_sensor_);
   LOG_SENSOR("  ", "Firmware Version", this->firmware_version_sensor_);
 
 #ifdef USE_SWITCH
@@ -209,6 +228,9 @@ void RadSensComponent::update() {
   raw_dynamic_intensity.u32 = convert_big_endian(raw_dynamic_intensity.u32);
   raw_static_intensity.u32 = convert_big_endian(raw_static_intensity.u32);
 
+  const float static_intensity_ur_h = raw_static_intensity.u32 * 0.1f;
+  const uint32_t uptime_s = (this_update - this->start_millis_) / 1000;
+
   ESP_LOGD(TAG, "Got dynamic=%.1f static=%.1f counts=%d", 
                 raw_dynamic_intensity.u32 * 0.1,
                 raw_static_intensity.u32 * 0.1,
@@ -218,15 +240,57 @@ void RadSensComponent::update() {
     this->counts_per_polling_sensor_->publish_state(raw_counts);
   }
 
+  this->total_cpp_ += raw_counts;
+  if (this->total_cpp_sensor_ != nullptr) {
+    this->total_cpp_sensor_->publish_state(this->total_cpp_);
+  }
+
+  if (raw_counts > this->max_cpp_) {
+    this->max_cpp_ = raw_counts;
+    this->max_cpp_timestamp_s_ = uptime_s;
+  }
+  if (this->radsens_max_cpp_sensor_ != nullptr) {
+    this->radsens_max_cpp_sensor_->publish_state(this->max_cpp_);
+  }
+  if (this->max_cpp_timestamp_sensor_ != nullptr) {
+    this->max_cpp_timestamp_sensor_->publish_state(this->max_cpp_timestamp_s_);
+  }
+
+  if (this->uptime_sensor_ != nullptr) {
+    this->uptime_sensor_->publish_state(uptime_s);
+  }
+
   if (this->last_update != 0) {
     uint32_t elapsed_ms = this_update - this->last_update;
     if (elapsed_ms > 0) {
+      this->accumulated_dose_ur_ += static_intensity_ur_h * (elapsed_ms / 3600000.0f);
+      if (this->accumulated_dose_ur_sensor_ != nullptr) {
+        this->accumulated_dose_ur_sensor_->publish_state(this->accumulated_dose_ur_);
+      }
+      if (this->accumulated_dose_msv_sensor_ != nullptr) {
+        this->accumulated_dose_msv_sensor_->publish_state(this->accumulated_dose_ur_ * 0.00001f);
+      }
+
       this->cpm_window_duration_ms_ += elapsed_ms;
       this->cpm_window_total_counts_ += raw_counts;
 
-      if (this->counts_per_minute_sensor_ != nullptr && this->cpm_window_duration_ms_ >= 60000) {
+      if (this->cpm_window_duration_ms_ >= 60000) {
         float counts_per_minute = (this->cpm_window_total_counts_ * 60000.0f) / this->cpm_window_duration_ms_;
-        this->counts_per_minute_sensor_->publish_state(counts_per_minute);
+
+        if (counts_per_minute > this->max_cpm_) {
+          this->max_cpm_ = counts_per_minute;
+          this->max_cpm_timestamp_s_ = uptime_s;
+        }
+
+        if (this->counts_per_minute_sensor_ != nullptr) {
+          this->counts_per_minute_sensor_->publish_state(counts_per_minute);
+        }
+        if (this->radsens_max_cpm_sensor_ != nullptr) {
+          this->radsens_max_cpm_sensor_->publish_state(this->max_cpm_);
+        }
+        if (this->max_cpm_timestamp_sensor_ != nullptr) {
+          this->max_cpm_timestamp_sensor_->publish_state(this->max_cpm_timestamp_s_);
+        }
 
         this->cpm_window_duration_ms_ = 0;
         this->cpm_window_total_counts_ = 0;
