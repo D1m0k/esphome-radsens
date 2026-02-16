@@ -5,16 +5,5 @@ influxdb:
   default_measurement: state
   database: hass
   include:
-    entities:
-      - sensor.radsens_dynamic_intensity
-      - sensor.radsens_static_intensity
-      - sensor.radsens_counts_per_polling
-      - sensor.radsens_counts_per_minute
-      - sensor.radsens_radsens_max_cpp
-      - sensor.radsens_radsens_max_cpm
-      - sensor.radsens_max_cpp_timestamp_s_uptime
-      - sensor.radsens_max_cpm_timestamp_s_uptime
-      - sensor.radsens_total_counts_per_polling
-      - sensor.radsens_uptime
-      - sensor.radsens_accumulated_dose_ur
-      - sensor.radsens_accumulated_dose_msv
+    entity_globs:
+      - sensor.radsens_*

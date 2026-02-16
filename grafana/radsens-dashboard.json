@@ -94,7 +94,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -197,7 +197,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -280,7 +280,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -363,7 +363,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -444,7 +444,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -490,7 +490,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -571,7 +571,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -617,7 +617,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -698,7 +698,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -779,7 +779,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -860,7 +860,7 @@
           ],
           "measurement": "state",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "autogen",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -927,7 +927,7 @@
           "text": "sensor.radsens_counts_per_minute",
           "value": "sensor.radsens_counts_per_minute"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "cpp_entity",
@@ -938,27 +938,27 @@
           "text": "sensor.radsens_counts_per_polling",
           "value": "sensor.radsens_counts_per_polling"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "max_cpm_entity",
         "type": "constant",
-        "query": "sensor.radsens_radsens_max_cpm",
+        "query": "sensor.radsens_max_cpm",
         "current": {
-          "text": "sensor.radsens_radsens_max_cpm",
-          "value": "sensor.radsens_radsens_max_cpm"
+          "text": "sensor.radsens_max_cpm",
+          "value": "sensor.radsens_max_cpm"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "max_cpp_entity",
         "type": "constant",
-        "query": "sensor.radsens_radsens_max_cpp",
+        "query": "sensor.radsens_max_cpp",
         "current": {
-          "text": "sensor.radsens_radsens_max_cpp",
-          "value": "sensor.radsens_radsens_max_cpp"
+          "text": "sensor.radsens_max_cpp",
+          "value": "sensor.radsens_max_cpp"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "dyn_entity",
@@ -968,7 +968,7 @@
           "text": "sensor.radsens_dynamic_intensity",
           "value": "sensor.radsens_dynamic_intensity"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "stat_entity",
@@ -978,7 +978,7 @@
           "text": "sensor.radsens_static_intensity",
           "value": "sensor.radsens_static_intensity"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "total_cpp_entity",
@@ -988,7 +988,7 @@
           "text": "sensor.radsens_total_counts_per_polling",
           "value": "sensor.radsens_total_counts_per_polling"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "uptime_entity",
@@ -998,7 +998,7 @@
           "text": "sensor.radsens_uptime",
           "value": "sensor.radsens_uptime"
         },
-        "hide": 2
+        "hide": 0
       },
       {
         "name": "dose_msv_entity",
@@ -1008,7 +1008,7 @@
           "text": "sensor.radsens_accumulated_dose_msv",
           "value": "sensor.radsens_accumulated_dose_msv"
         },
-        "hide": 2
+        "hide": 0
       }
     ]
   },
