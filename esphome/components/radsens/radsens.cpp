@@ -9,6 +9,9 @@
 #include "switch/low_power_control.h"
 #include "switch/led_control.h"
 #endif
+#ifdef USE_NUMBER
+#include "number/polling_interval_control.h"
+#endif
 
 namespace esphome {
 namespace radsens {
@@ -133,6 +136,11 @@ void RadSensComponent::setup() {
     static_cast<LedControl*>(this->control_led_switch_)->setup();
 #endif
 
+#ifdef USE_NUMBER
+  if (this->polling_interval_number_ != nullptr)
+    static_cast<PollingIntervalControl*>(this->polling_interval_number_)->setup();
+#endif
+
   ESP_LOGCONFIG(TAG, "RadSens setup: Complete (firmware version %u)!", this->firmware_version);
 }
 
@@ -160,6 +168,18 @@ void RadSensComponent::dump_config() {
 
 float RadSensComponent::get_setup_priority() const { return setup_priority::DATA; }
 void RadSensComponent::set_sensitivity(uint16_t sensitivity) { this->sensitivity_ = sensitivity; }
+
+void RadSensComponent::set_polling_interval_seconds(uint32_t polling_interval_seconds) {
+  if (polling_interval_seconds < 5) {
+    polling_interval_seconds = 5;
+  } else if (polling_interval_seconds > 300) {
+    polling_interval_seconds = 300;
+  }
+
+  this->set_update_interval(polling_interval_seconds * 1000);
+  this->last_update = 0;
+  ESP_LOGCONFIG(TAG, "RadSens polling interval set to %u s", polling_interval_seconds);
+}
 
 void RadSensComponent::update() {
   // must be zero'd as we write to the last 3 bytes

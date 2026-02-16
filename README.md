@@ -41,6 +41,11 @@ sensor:
       name: "Static Intensity"
     counts_per_minute:
       name: "Counts Per Minute"
+
+number:
+  - platform: radsens
+    polling_interval:
+      name: "Polling Interval"
 ```
 
 
@@ -59,6 +64,8 @@ A full configuration can be found [here](geiger.yaml) but I recommend reading th
 | sensor:radsens:dynamic_intensity | The 'dynamic_intensity' sensor which is an average intensity over a varying time window |
 | sensor:radsens:static_intensity | The 'static_intensity' sensor which is an average intensity over the last 5min |
 | sensor:radsens:counts_per_mintute | The number of detected impulses since the last update, scaled to a minute window |
+| number:radsens | Needed to enable interval control from Home Assistant |
+| number:radsens:polling_interval | Poll interval in seconds (5..300). Value is applied immediately and restored after reboot |
 | switch:radsens | Needed to enable the switches |
 | switch:radsens:control_led | Controls if the blue led which flashes when an impulse is detected (default on) |
 | switch:radsens:control_high_voltage | Controls if the high voltage generator is on.  When turning off it takes a while to change readings (~5min for me) but it will go to zero (default on) |

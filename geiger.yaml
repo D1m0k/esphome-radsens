@@ -44,6 +44,11 @@ sensor:
     counts_per_minute:
       name: "Counts Per Minute"
 
+number:
+  - platform: radsens
+    polling_interval:
+      name: "Polling Interval"
+
 
 
 switch:

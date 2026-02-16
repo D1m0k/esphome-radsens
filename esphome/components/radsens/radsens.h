@@ -6,6 +6,9 @@
 #ifdef USE_SWITCH
 #include "esphome/components/switch/switch.h"
 #endif
+#ifdef USE_NUMBER
+#include "esphome/components/number/number.h"
+#endif
 
 namespace esphome {
 namespace radsens {
@@ -41,6 +44,12 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   void set_counts_per_minute_sensor(sensor::Sensor *counts_per_minute_sensor) { counts_per_minute_sensor_ = counts_per_minute_sensor; }
   void set_firmware_version_sensor(sensor::Sensor *firmware_version_sensor) { firmware_version_sensor_ = firmware_version_sensor; }
 
+#ifdef USE_NUMBER
+  void set_polling_interval_number(number::Number *polling_interval_number) { polling_interval_number_ = polling_interval_number; }
+#endif
+  void set_polling_interval_seconds(uint32_t polling_interval_seconds);
+  uint32_t get_polling_interval_seconds() const { return this->get_update_interval() / 1000; }
+
   void set_high_voltage(bool enable);
   void set_led(bool enable);
   void set_low_power(bool enable);
@@ -55,6 +64,9 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   sensor::Sensor *static_intensity_sensor_{nullptr};
   sensor::Sensor *counts_per_minute_sensor_{nullptr};
   sensor::Sensor *firmware_version_sensor_{nullptr};
+#ifdef USE_NUMBER
+  number::Number *polling_interval_number_{nullptr};
+#endif
   uint32_t last_update = 0;
   uint8_t firmware_version = 0;
   uint16_t sensitivity_ = 0;
