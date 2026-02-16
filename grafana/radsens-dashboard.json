@@ -922,10 +922,10 @@
         "name": "cpm_entity",
         "type": "constant",
         "label": "CPM entity",
-        "query": "sensor.geiger_counter_counts_per_minute",
+        "query": "sensor.radsens_counts_per_minute",
         "current": {
-          "text": "sensor.geiger_counter_counts_per_minute",
-          "value": "sensor.geiger_counter_counts_per_minute"
+          "text": "sensor.radsens_counts_per_minute",
+          "value": "sensor.radsens_counts_per_minute"
         },
         "hide": 2
       },
@@ -933,80 +933,80 @@
         "name": "cpp_entity",
         "type": "constant",
         "label": "CPP entity",
-        "query": "sensor.geiger_counter_counts_per_polling",
+        "query": "sensor.radsens_counts_per_polling",
         "current": {
-          "text": "sensor.geiger_counter_counts_per_polling",
-          "value": "sensor.geiger_counter_counts_per_polling"
+          "text": "sensor.radsens_counts_per_polling",
+          "value": "sensor.radsens_counts_per_polling"
         },
         "hide": 2
       },
       {
         "name": "max_cpm_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_radsens_max_cpm",
+        "query": "sensor.radsens_radsens_max_cpm",
         "current": {
-          "text": "sensor.geiger_counter_radsens_max_cpm",
-          "value": "sensor.geiger_counter_radsens_max_cpm"
+          "text": "sensor.radsens_radsens_max_cpm",
+          "value": "sensor.radsens_radsens_max_cpm"
         },
         "hide": 2
       },
       {
         "name": "max_cpp_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_radsens_max_cpp",
+        "query": "sensor.radsens_radsens_max_cpp",
         "current": {
-          "text": "sensor.geiger_counter_radsens_max_cpp",
-          "value": "sensor.geiger_counter_radsens_max_cpp"
+          "text": "sensor.radsens_radsens_max_cpp",
+          "value": "sensor.radsens_radsens_max_cpp"
         },
         "hide": 2
       },
       {
         "name": "dyn_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_dynamic_intensity",
+        "query": "sensor.radsens_dynamic_intensity",
         "current": {
-          "text": "sensor.geiger_counter_dynamic_intensity",
-          "value": "sensor.geiger_counter_dynamic_intensity"
+          "text": "sensor.radsens_dynamic_intensity",
+          "value": "sensor.radsens_dynamic_intensity"
         },
         "hide": 2
       },
       {
         "name": "stat_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_static_intensity",
+        "query": "sensor.radsens_static_intensity",
         "current": {
-          "text": "sensor.geiger_counter_static_intensity",
-          "value": "sensor.geiger_counter_static_intensity"
+          "text": "sensor.radsens_static_intensity",
+          "value": "sensor.radsens_static_intensity"
         },
         "hide": 2
       },
       {
         "name": "total_cpp_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_total_counts_per_polling",
+        "query": "sensor.radsens_total_counts_per_polling",
         "current": {
-          "text": "sensor.geiger_counter_total_counts_per_polling",
-          "value": "sensor.geiger_counter_total_counts_per_polling"
+          "text": "sensor.radsens_total_counts_per_polling",
+          "value": "sensor.radsens_total_counts_per_polling"
         },
         "hide": 2
       },
       {
         "name": "uptime_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_uptime",
+        "query": "sensor.radsens_uptime",
         "current": {
-          "text": "sensor.geiger_counter_uptime",
-          "value": "sensor.geiger_counter_uptime"
+          "text": "sensor.radsens_uptime",
+          "value": "sensor.radsens_uptime"
         },
         "hide": 2
       },
       {
         "name": "dose_msv_entity",
         "type": "constant",
-        "query": "sensor.geiger_counter_accumulated_dose_msv",
+        "query": "sensor.radsens_accumulated_dose_msv",
         "current": {
-          "text": "sensor.geiger_counter_accumulated_dose_msv",
-          "value": "sensor.geiger_counter_accumulated_dose_msv"
+          "text": "sensor.radsens_accumulated_dose_msv",
+          "value": "sensor.radsens_accumulated_dose_msv"
         },
         "hide": 2
       }
