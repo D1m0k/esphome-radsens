@@ -39,6 +39,8 @@ sensor:
       name: "Dynamic Intensity"
     static_intensity:
       name: "Static Intensity"
+    counts_per_polling:
+      name: "Counts Per Polling"
     counts_per_minute:
       name: "Counts Per Minute"
 
@@ -63,7 +65,8 @@ A full configuration can be found [here](geiger.yaml) but I recommend reading th
 | sensor:radsens | Needed to enable the sensors |
 | sensor:radsens:dynamic_intensity | The 'dynamic_intensity' sensor which is an average intensity over a varying time window |
 | sensor:radsens:static_intensity | The 'static_intensity' sensor which is an average intensity over the last 5min |
-| sensor:radsens:counts_per_mintute | The number of detected impulses since the last update, scaled to a minute window |
+| sensor:radsens:counts_per_polling | The number of detected impulses in the current polling interval |
+| sensor:radsens:counts_per_minute | Counts-per-minute computed from average polling counts over 60 seconds (published every ~60s) |
 | number:radsens | Needed to enable interval control from Home Assistant |
 | number:radsens:polling_interval | Poll interval in seconds (5..300). Value is applied immediately and restored after reboot |
 | switch:radsens | Needed to enable the switches |

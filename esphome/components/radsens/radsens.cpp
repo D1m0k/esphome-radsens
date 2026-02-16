@@ -156,6 +156,7 @@ void RadSensComponent::dump_config() {
 
   LOG_SENSOR("  ", "Dynamic Intensity", this->dynamic_intensity_sensor_);
   LOG_SENSOR("  ", "Static Intensity", this->static_intensity_sensor_);
+  LOG_SENSOR("  ", "Counts Per Polling", this->counts_per_polling_sensor_);
   LOG_SENSOR("  ", "Counts Per Minute", this->counts_per_minute_sensor_);
   LOG_SENSOR("  ", "Firmware Version", this->firmware_version_sensor_);
 
@@ -177,6 +178,8 @@ void RadSensComponent::set_polling_interval_seconds(uint32_t polling_interval_se
   }
 
   this->set_update_interval(polling_interval_seconds * 1000);
+  this->cpm_window_duration_ms_ = 0;
+  this->cpm_window_total_counts_ = 0;
   this->last_update = 0;
   ESP_LOGCONFIG(TAG, "RadSens polling interval set to %u s", polling_interval_seconds);
 }
@@ -211,11 +214,26 @@ void RadSensComponent::update() {
                 raw_static_intensity.u32 * 0.1,
                 raw_counts);
 
-  if (this->last_update != 0 && (this->counts_per_minute_sensor_ != nullptr)){
-    float scale_to_minutes = ((millis() - this->last_update) / 10000.0);
-    this->counts_per_minute_sensor_->publish_state(raw_counts / scale_to_minutes);
+  if (this->counts_per_polling_sensor_ != nullptr) {
+    this->counts_per_polling_sensor_->publish_state(raw_counts);
   }
-  this->last_update = millis();
+
+  if (this->last_update != 0) {
+    uint32_t elapsed_ms = this_update - this->last_update;
+    if (elapsed_ms > 0) {
+      this->cpm_window_duration_ms_ += elapsed_ms;
+      this->cpm_window_total_counts_ += raw_counts;
+
+      if (this->counts_per_minute_sensor_ != nullptr && this->cpm_window_duration_ms_ >= 60000) {
+        float counts_per_minute = (this->cpm_window_total_counts_ * 60000.0f) / this->cpm_window_duration_ms_;
+        this->counts_per_minute_sensor_->publish_state(counts_per_minute);
+
+        this->cpm_window_duration_ms_ = 0;
+        this->cpm_window_total_counts_ = 0;
+      }
+    }
+  }
+  this->last_update = this_update;
 
   if (this->dynamic_intensity_sensor_ != nullptr)
     this->dynamic_intensity_sensor_->publish_state(raw_dynamic_intensity.u32 * 0.1);

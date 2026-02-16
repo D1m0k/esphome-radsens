@@ -42,6 +42,7 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   void set_dynamic_intensity_sensor(sensor::Sensor *dynamic_intensity_sensor) { dynamic_intensity_sensor_ = dynamic_intensity_sensor; }
   void set_static_intensity_sensor(sensor::Sensor *static_intensity_sensor) { static_intensity_sensor_ = static_intensity_sensor; }
   void set_counts_per_minute_sensor(sensor::Sensor *counts_per_minute_sensor) { counts_per_minute_sensor_ = counts_per_minute_sensor; }
+  void set_counts_per_polling_sensor(sensor::Sensor *counts_per_polling_sensor) { counts_per_polling_sensor_ = counts_per_polling_sensor; }
   void set_firmware_version_sensor(sensor::Sensor *firmware_version_sensor) { firmware_version_sensor_ = firmware_version_sensor; }
 
 #ifdef USE_NUMBER
@@ -63,10 +64,13 @@ class RadSensComponent : public PollingComponent, public i2c::I2CDevice {
   sensor::Sensor *dynamic_intensity_sensor_{nullptr};
   sensor::Sensor *static_intensity_sensor_{nullptr};
   sensor::Sensor *counts_per_minute_sensor_{nullptr};
+  sensor::Sensor *counts_per_polling_sensor_{nullptr};
   sensor::Sensor *firmware_version_sensor_{nullptr};
 #ifdef USE_NUMBER
   number::Number *polling_interval_number_{nullptr};
 #endif
+  uint32_t cpm_window_duration_ms_{0};
+  uint32_t cpm_window_total_counts_{0};
   uint32_t last_update = 0;
   uint8_t firmware_version = 0;
   uint16_t sensitivity_ = 0;

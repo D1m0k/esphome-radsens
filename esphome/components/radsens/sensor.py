@@ -16,6 +16,7 @@ from .const import (
     UNIT_COUNT_PER_MINUTE,
     CONF_DYNAMIC_INTENSITY,
     CONF_STATIC_INTENSITY,
+    CONF_COUNTS_PER_POLLING,
     CONF_COUNTS_PER_MINUTE,
     CONF_FIRMWARE_VERSION
 )
@@ -38,6 +39,13 @@ counts_per_minute_schema = sensor.sensor_schema(
     state_class=STATE_CLASS_MEASUREMENT,
     device_class=DEVICE_CLASS_EMPTY
 )
+counts_per_polling_schema = sensor.sensor_schema(
+    unit_of_measurement=UNIT_EMPTY,
+    icon=ICON_RADIOACTIVE,
+    accuracy_decimals=0,
+    state_class=STATE_CLASS_MEASUREMENT,
+    device_class=DEVICE_CLASS_EMPTY
+)
 firmware_version_schema = sensor.sensor_schema(
     unit_of_measurement=UNIT_EMPTY,
     icon=ICON_CHIP,
@@ -53,6 +61,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(CONF_RADSENS_ID): cv.use_id(RadSensComponent),
             cv.Optional(CONF_DYNAMIC_INTENSITY): intensity_schema,
             cv.Optional(CONF_STATIC_INTENSITY): intensity_schema,
+            cv.Optional(CONF_COUNTS_PER_POLLING): counts_per_polling_schema,
             cv.Optional(CONF_COUNTS_PER_MINUTE): counts_per_minute_schema,
             cv.Optional(CONF_FIRMWARE_VERSION): firmware_version_schema,
         }
@@ -67,6 +76,9 @@ async def to_code(config):
     if CONF_STATIC_INTENSITY in config:
         sens = await sensor.new_sensor(config[CONF_STATIC_INTENSITY])
         cg.add(var.set_static_intensity_sensor(sens))
+    if CONF_COUNTS_PER_POLLING in config:
+        sens = await sensor.new_sensor(config[CONF_COUNTS_PER_POLLING])
+        cg.add(var.set_counts_per_polling_sensor(sens))
     if CONF_COUNTS_PER_MINUTE in config:
         sens = await sensor.new_sensor(config[CONF_COUNTS_PER_MINUTE])
         cg.add(var.set_counts_per_minute_sensor(sens))

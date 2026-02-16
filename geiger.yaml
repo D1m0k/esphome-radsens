@@ -5,7 +5,7 @@ esphome:
 esp32:
   board: wemos_d1_mini32
   framework:
-    type: ardunio
+    type: arduino
 
 logger:
 
@@ -39,6 +39,8 @@ sensor:
       name: "Dynamic Intensity"
     static_intensity:
       name: "Static Intensity"
+    counts_per_polling:
+      name: "Counts Per Polling"
     firmware_version:
       name: "Firmware Version"
     counts_per_minute:
