@@ -7,3 +7,4 @@ influxdb:
   include:
     entity_globs:
       - sensor.radsens_*
+      - sensor.geiger_counter_*
