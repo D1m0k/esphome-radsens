@@ -1,10 +1,11 @@
 influxdb:
-  username: hass
+  host: !secret influxdb_host
+  port: 8086
+  username: !secret influxdb_username
   password: !secret influxdb_password
+  database: !secret influxdb_database
   max_retries: 3
   default_measurement: state
-  database: hass
   include:
     entity_globs:
       - sensor.radsens_*
-      - sensor.geiger_counter_*
