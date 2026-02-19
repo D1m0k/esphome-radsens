@@ -5,10 +5,10 @@ from esphome.const import (
     STATE_CLASS_MEASUREMENT,
     STATE_CLASS_TOTAL_INCREASING,
     ICON_RADIOACTIVE,
-    UNIT_EMPTY,
     UNIT_SECOND,
     ICON_CHIP,
     DEVICE_CLASS_FIRMWARE,
+    DEVICE_CLASS_DURATION,
     DEVICE_CLASS_EMPTY,
     ENTITY_CATEGORY_DIAGNOSTIC
 )
@@ -18,6 +18,7 @@ from .const import (
     UNIT_MICROROENTGEN,
     UNIT_MILLISIEVERT,
     UNIT_COUNT_PER_MINUTE,
+    UNIT_COUNT,
     CONF_DYNAMIC_INTENSITY,
     CONF_STATIC_INTENSITY,
     CONF_COUNTS_PER_POLLING,
@@ -52,14 +53,14 @@ counts_per_minute_schema = sensor.sensor_schema(
     device_class=DEVICE_CLASS_EMPTY
 )
 count_integer_schema = sensor.sensor_schema(
-    unit_of_measurement=UNIT_EMPTY,
+    unit_of_measurement=UNIT_COUNT,
     icon=ICON_RADIOACTIVE,
     accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT,
     device_class=DEVICE_CLASS_EMPTY
 )
 counts_per_polling_schema = sensor.sensor_schema(
-    unit_of_measurement=UNIT_EMPTY,
+    unit_of_measurement=UNIT_COUNT,
     icon=ICON_RADIOACTIVE,
     accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT,
@@ -70,7 +71,7 @@ uptime_schema = sensor.sensor_schema(
     icon="mdi:timer-outline",
     accuracy_decimals=0,
     state_class=STATE_CLASS_TOTAL_INCREASING,
-    device_class=DEVICE_CLASS_EMPTY,
+    device_class=DEVICE_CLASS_DURATION,
     entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
 )
 dose_ur_schema = sensor.sensor_schema(
@@ -88,12 +89,18 @@ dose_msv_schema = sensor.sensor_schema(
     device_class=DEVICE_CLASS_EMPTY,
 )
 firmware_version_schema = sensor.sensor_schema(
-    unit_of_measurement=UNIT_EMPTY,
     icon=ICON_CHIP,
     accuracy_decimals=0,
-    state_class=STATE_CLASS_MEASUREMENT,
-    device_class=DEVICE_CLASS_EMPTY,
+    device_class=DEVICE_CLASS_FIRMWARE,
     entity_category=ENTITY_CATEGORY_DIAGNOSTIC
+)
+
+total_count_schema = sensor.sensor_schema(
+    unit_of_measurement=UNIT_COUNT,
+    icon=ICON_RADIOACTIVE,
+    accuracy_decimals=0,
+    state_class=STATE_CLASS_TOTAL_INCREASING,
+    device_class=DEVICE_CLASS_EMPTY,
 )
 
 CONFIG_SCHEMA = (
@@ -108,7 +115,7 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_RADSENS_MAX_CPP): count_integer_schema,
             cv.Optional(CONF_MAX_CPM_TIMESTAMP): uptime_schema,
             cv.Optional(CONF_MAX_CPP_TIMESTAMP): uptime_schema,
-            cv.Optional(CONF_TOTAL_CPP): count_integer_schema,
+            cv.Optional(CONF_TOTAL_CPP): total_count_schema,
             cv.Optional(CONF_UPTIME): uptime_schema,
             cv.Optional(CONF_ACCUMULATED_DOSE_UR): dose_ur_schema,
             cv.Optional(CONF_ACCUMULATED_DOSE_MSV): dose_msv_schema,
